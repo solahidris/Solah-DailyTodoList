@@ -66,9 +66,11 @@ function App() {
           alt="react-logo"
           className="mb-5 animate-[spin_5s_linear_infinite] flex justify-center w-screen h-20"
         ></img>
+                <p className="text-slate-400/80 font-mono text-xs flex justify-center mb-5">by solah</p>
         <h1 className="rounded-lg bg-slate-500/80 p-5 text-3xl text-slate-300 font-mono font-bold flex justify-center">
           Paa Eltit
         </h1>
+
         <div className="pt-5 text-slate-400 font-mono">
           <div className="bg-slate-500/50 p-8 rounded-lg">
             <ul>
