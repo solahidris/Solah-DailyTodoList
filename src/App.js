@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
+// import { useRealtime } from "react-supabase";
 
 const supabaseUrl = "https://fvolyzqnkqdecedifqze.supabase.co";
 const supabaseKey =
@@ -9,18 +10,34 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 function App() {
-  const [inputdata, setInputdata] = useState([]);
+
   const [editingId, setEditingId] = useState(null); // state variable to keep track of the edited item
   const [editedValue, setEditedValue] = useState(""); // state variable to keep track of the edited value
+  
+  const [inputdata, setInputdata] = useState([]);
 
   useEffect(() => {
     getInputdata();
+    supabase
+  .channel('table-db-changes')
+  .on(
+    'postgres_changes',
+    {
+      event: '*',
+      schema: 'public',
+      table: 'inputdata'
+    },
+    (payload) => {getInputdata();}
+  )
+  .subscribe()
   }, []);
 
   async function getInputdata() {
     const { data } = await supabase.from("inputdata").select();
     setInputdata(data);
   }
+  // const [result, reexecute] = useRealtime('inputdata');
+  // const { data: todo, error, fetching } = result;
 
   const deleteButtonHandler = async (id) => {
     console.log("delete button working");
