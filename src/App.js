@@ -52,9 +52,9 @@ function App() {
         </h1>
         <div className="flex justify-center pt-5 text-slate-400 font-mono">
           <div className="bg-slate-500/50 p-8 rounded-lg">
-            <ul className="bg-slate-500/20 p-3 rounded-lg">
+            <ul className="">
               {inputdata.map((list) => (
-                <li key={list.id} className="flex">
+                <li key={list.id} className="bg-slate-500/20 py-1 rounded-lg flex items-center mb-3">
                   <span>{list.todo}</span>
                   <button
                     className="rounded-full bg-red-500/90 text-white px-[7px] h-full ml-3"
