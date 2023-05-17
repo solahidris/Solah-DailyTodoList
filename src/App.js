@@ -77,7 +77,7 @@ function App() {
 
   return (
     <>
-      <div className="bg-slate-700 h-screen p-10">
+      <div className="bg-slate-700 h-screen p-8">
         <img
           src={logo}
           alt="react-logo"
@@ -91,7 +91,7 @@ function App() {
         </h1>
 
         <div className="pt-5 text-slate-400 font-mono max-w-md mx-auto">
-          <div className="bg-slate-500/50 p-8 rounded-lg">
+          <div className="bg-slate-500/50 px-4 py-8 text-sm rounded-lg">
             <ul>
               {/* added index for numbering */}
               {inputdata.map((list, index) => (
@@ -122,7 +122,7 @@ function App() {
                     </button>
                   ) : (
                     <button
-                      className="rounded-full bg-slate-100/50 text-white px-[5px] h-full ml-3"
+                      className="rounded-full bg-slate-100/50 text-white px-[4px] h-full ml-3"
                       onClick={() => {
                         setEditingId(list.id);
                         setEditedValue(list.todo);
@@ -132,7 +132,7 @@ function App() {
                     </button>
                   )}
                   <button
-                    className="justify-items-end rounded-full bg-red-500/90 text-white px-[7px] h-full ml-3"
+                    className="justify-items-end rounded-full bg-red-500/90 text-white px-[6px] h-full ml-3"
                     onClick={() => deleteButtonHandler(list.id)}
                   >
                     -
