@@ -10,34 +10,34 @@ const supabaseKey =
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 function App() {
-
   const [editingId, setEditingId] = useState(null); // state variable to keep track of the edited item
   const [editedValue, setEditedValue] = useState(""); // state variable to keep track of the edited value
-  
+
   const [inputdata, setInputdata] = useState([]);
 
   useEffect(() => {
     getInputdata();
+    // listen to all database changes
     supabase
-  .channel('table-db-changes')
-  .on(
-    'postgres_changes',
-    {
-      event: '*',
-      schema: 'public',
-      table: 'inputdata'
-    },
-    (payload) => {getInputdata();}
-  )
-  .subscribe()
+      .channel("table-db-changes")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "inputdata",
+        },
+        (payload) => {
+          getInputdata();
+        }
+      )
+      .subscribe();
   }, []);
 
   async function getInputdata() {
     const { data } = await supabase.from("inputdata").select();
     setInputdata(data);
   }
-  // const [result, reexecute] = useRealtime('inputdata');
-  // const { data: todo, error, fetching } = result;
 
   const deleteButtonHandler = async (id) => {
     console.log("delete button working");
@@ -70,9 +70,9 @@ function App() {
     console.log("clear button working");
     // eslint-disable-next-line
     const { data, error } = await supabase
-    .from('inputdata')
-    .delete()
-    .not('todo', 'eq', 'Do not delete me');
+      .from("inputdata")
+      .delete()
+      .not("todo", "eq", "Do not delete me");
   };
 
   return (
@@ -81,30 +81,38 @@ function App() {
         <img
           src={logo}
           alt="react-logo"
-          className="mb-5 animate-[spin_5s_linear_infinite] flex justify-center w-screen h-20"
+          className="mb-5 animate-[spin_10s_linear_infinite] flex justify-center w-screen h-20"
         ></img>
-                <p className="text-slate-400/80 font-mono text-xs flex justify-center mb-5">by solah</p>
-        <h1 className="rounded-lg bg-slate-500/80 p-5 text-3xl text-slate-300 font-mono font-bold flex justify-center">
-          Paa Eltit
+        <p className="text-slate-400/80 font-mono text-xs flex justify-center mb-5">
+          by solah
+        </p>
+        <h1 className="rounded-lg bg-slate-300/80 p-5 text-3xl text-slate-700 text-lg font-mono font-bold flex justify-center max-w-md mx-auto">
+          a will do list
         </h1>
 
-        <div className="pt-5 text-slate-400 font-mono">
+        <div className="pt-5 text-slate-400 font-mono max-w-md mx-auto">
           <div className="bg-slate-500/50 p-8 rounded-lg">
             <ul>
-              {inputdata.map((list) => (
+              {/* added index for numbering */}
+              {inputdata.map((list, index) => (
                 <li key={list.id} className="flex items-center mb-3">
-                  {editingId === list.id ? (
-                    <input
-                      type="text"
-                      value={editedValue}
-                      onChange={(e) => setEditedValue(e.target.value)}
-                      className="bg-slate-300 rounded-lg py-1 px-3 text-slate-600/80"
-                    />
-                  ) : (
-                    <span className="bg-slate-500/20 text-slate-300 py-1 px-3 rounded-lg">
-                      {list.todo}
-                    </span>
-                  )}
+                  <div className="flex-grow">
+                    {editingId === list.id ? (
+                      <input
+                        type="text"
+                        value={editedValue}
+                        onChange={(e) => setEditedValue(e.target.value)}
+                        className="flex justify-start bg-slate-400/80 rounded-lg py-1 px-3 text-slate-600/80"
+                      />
+                    ) : (
+                      <span className="bg-slate-500/20 text-slate-300 py-1 px-3 rounded-lg">
+                        {/* todos with numbering */}
+                        {`${index + 1}) ${list.todo}`}
+                        {/* just todos */}
+                        {/* {list.todo} */}
+                      </span>
+                    )}
+                  </div>
                   {editingId === list.id ? (
                     <button
                       className="rounded-full bg-green-600/90 text-white px-[5px] h-full ml-3"
@@ -132,18 +140,20 @@ function App() {
                 </li>
               ))}
             </ul>
-            <button
-              className="rounded-full bg-slate-500/90 text-white text-xs py-1 px-3 mt-7"
-              onClick={additemHandler}
-            >
-              add
-            </button>
-            <button
-                    className="rounded-full bg-slate-500/90 text-white text-xs py-1 px-3 ml-3 mt-7"
-                    onClick={() => clearButtonHandler()}
-                  >
-                    clear all
-                  </button>
+            <div className="flex justify-end">
+              <button
+                className="rounded-full bg-slate-500/90 text-white text-xs py-1 px-3 mt-7"
+                onClick={additemHandler}
+              >
+                add
+              </button>
+              <button
+                className="rounded-full bg-slate-500/90 text-white text-xs py-1 px-3 ml-3 mt-7"
+                onClick={() => clearButtonHandler()}
+              >
+                clear all
+              </button>
+            </div>
           </div>
         </div>
       </div>
