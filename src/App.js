@@ -1,13 +1,15 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
-// import { useRealtime } from "react-supabase";
+import supabase from "./components/supabase";
+import ReactLogo from "./components/reactLogo";
 
-const supabaseUrl = "https://fvolyzqnkqdecedifqze.supabase.co";
-const supabaseKey =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ2b2x5enFua3FkZWNlZGlmcXplIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQyNTIwNTAsImV4cCI6MTk5OTgyODA1MH0.MDX6b5gHzGDIv-gg5HwZeAGDCdYHXfDACnUFpaxu2mY";
-const supabase = createClient(supabaseUrl, supabaseKey);
+// REPLACED WITH import supabase
+
+// import { createClient } from "@supabase/supabase-js";
+// const supabaseUrl = "https://fvolyzqnkqdecedifqze.supabase.co";
+// const supabaseKey =
+//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ2b2x5enFua3FkZWNlZGlmcXplIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQyNTIwNTAsImV4cCI6MTk5OTgyODA1MH0.MDX6b5gHzGDIv-gg5HwZeAGDCdYHXfDACnUFpaxu2mY";
+// const supabase = createClient(supabaseUrl, supabaseKey);
 
 function App() {
   const [editingId, setEditingId] = useState(null); // state variable to keep track of the edited item
@@ -78,11 +80,7 @@ function App() {
   return (
     <>
       <div className="bg-slate-700 h-screen p-8">
-        <img
-          src={logo}
-          alt="react-logo"
-          className="mb-5 animate-[spin_10s_linear_infinite] flex justify-center w-screen h-20"
-        ></img>
+        <ReactLogo />
         <p className="text-slate-400/80 font-mono text-xs flex justify-center mb-5">
           by solah
         </p>
@@ -115,7 +113,7 @@ function App() {
                   </div>
                   {editingId === list.id ? (
                     <button
-                      className="rounded-full bg-green-600/90 text-white px-[5px] h-full ml-3"
+                      className="rounded-full bg-green-600/90 text-white px-[4px] h-full ml-3"
                       onClick={() => editButtonHandler(list.id)}
                     >
                       ✅
