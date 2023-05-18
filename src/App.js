@@ -3,14 +3,6 @@ import { useEffect, useState } from "react";
 import supabase from "./components/supabase";
 import ReactLogo from "./components/reactLogo";
 
-// REPLACED WITH import supabase
-
-// import { createClient } from "@supabase/supabase-js";
-// const supabaseUrl = "https://fvolyzqnkqdecedifqze.supabase.co";
-// const supabaseKey =
-//   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ2b2x5enFua3FkZWNlZGlmcXplIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODQyNTIwNTAsImV4cCI6MTk5OTgyODA1MH0.MDX6b5gHzGDIv-gg5HwZeAGDCdYHXfDACnUFpaxu2mY";
-// const supabase = createClient(supabaseUrl, supabaseKey);
-
 function App() {
   const [editingId, setEditingId] = useState(null); // state variable to keep track of the edited item
   const [editedValue, setEditedValue] = useState(""); // state variable to keep track of the edited value
