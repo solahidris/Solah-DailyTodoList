@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    "./src/App.js", "./src/components/reactlogo.js"
+    "./src/App.js", "./src/components/reactLogo.js",
   ],
   theme: {
     extend: {
