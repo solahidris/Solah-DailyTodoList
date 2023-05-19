@@ -2,11 +2,17 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import supabase from "./components/supabase";
 import ReactLogo from "./components/reactLogo";
+import Header from "./components/header.js";
+import AddButton from "./components/AddButton";
+import ClearButton from "./components/ClearButton";
+import DeleteListButton from "./components/DeleteListButton";
+import EditListButton from "./components/EditListButton";
+import EditDoneListButton from "./components/EditDoneListButton";
+import InputEdit from "./components/InputEdit";
 
 function App() {
   const [editingId, setEditingId] = useState(null); // state variable to keep track of the edited item
   const [editedValue, setEditedValue] = useState(""); // state variable to keep track of the edited value
-
   const [inputdata, setInputdata] = useState([]);
 
   useEffect(() => {
@@ -73,76 +79,46 @@ function App() {
     <>
       <div className="bg-slate-700 h-screen p-8">
         <ReactLogo />
-        <p className="text-slate-400/80 font-mono text-xs flex justify-center mb-5">
-          by solah
-        </p>
-        <h1 className="rounded-lg bg-slate-300/80 p-5 text-3xl text-slate-700 text-lg font-mono font-bold flex justify-center max-w-md mx-auto">
-          a will do list
-        </h1>
+        <Header />
 
         <div className="pt-5 text-slate-400 font-mono max-w-md mx-auto">
           <div className="bg-slate-500/50 px-4 py-8 text-sm rounded-lg">
             <ul>
-              {/* added index for numbering */}
               {inputdata.map((list, index) => (
                 <li key={list.id} className="flex items-center mb-3">
                   <div className="flex-grow">
                     {editingId === list.id ? (
-                      <input
-                        type="text"
+                      <InputEdit
                         value={editedValue}
                         onChange={(e) => setEditedValue(e.target.value)}
-                        className="flex justify-start bg-slate-400/80 rounded-lg py-1 px-3 text-slate-600/80"
                       />
                     ) : (
                       <span className="bg-slate-500/20 text-slate-300 py-1 px-3 rounded-lg">
-                        {/* todos with numbering */}
                         {`${index + 1}) ${list.todo}`}
-                        {/* just todos */}
-                        {/* {list.todo} */}
                       </span>
                     )}
                   </div>
                   {editingId === list.id ? (
-                    <button
-                      className="rounded-full bg-green-600/90 text-white px-[4px] h-full ml-3"
+                    <EditDoneListButton
                       onClick={() => editButtonHandler(list.id)}
-                    >
-                      ✅
-                    </button>
+                    />
                   ) : (
-                    <button
-                      className="rounded-full bg-slate-100/50 text-white px-[4px] h-full ml-3"
+                    <EditListButton
                       onClick={() => {
                         setEditingId(list.id);
                         setEditedValue(list.todo);
                       }}
-                    >
-                      📝
-                    </button>
+                    />
                   )}
-                  <button
-                    className="justify-items-end rounded-full bg-red-500/90 text-white px-[6px] h-full ml-3"
+                  <DeleteListButton
                     onClick={() => deleteButtonHandler(list.id)}
-                  >
-                    -
-                  </button>
+                  />
                 </li>
               ))}
             </ul>
             <div className="flex justify-end">
-              <button
-                className="rounded-full bg-slate-500/90 text-white text-xs py-1 px-3 mt-7"
-                onClick={additemHandler}
-              >
-                add
-              </button>
-              <button
-                className="rounded-full bg-slate-500/90 text-white text-xs py-1 px-3 ml-3 mt-7"
-                onClick={() => clearButtonHandler()}
-              >
-                clear all
-              </button>
+              <AddButton onClick={additemHandler} />
+              <ClearButton onClick={clearButtonHandler} />
             </div>
           </div>
         </div>
